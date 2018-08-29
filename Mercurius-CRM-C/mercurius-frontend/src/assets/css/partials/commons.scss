@@ -1,0 +1,456 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.btnApp{
+	border-radius: 10px;
+	font-size: 14px;
+}
+.bgRedAppColor{
+	background-color: $redapp;
+	color: $white;
+}
+.bgGreyAppColor{
+	background-color:$bluegrey;
+	color: $white;
+}
+
+.btnToolsGrey{
+	background-color: $whiteGrey;
+	border:1px solid $ligtherGrey;
+	color: $bluegrey;
+	font-size: 12px; 
+}
+/*content styles*/
+.content{
+	padding-top: 40px;
+	position: relative;
+}
+
+.title-content{
+	color: $darkbluegrey;
+	font-size: 30px;
+	font-weight: 700;
+}
+
+.body-content{
+	padding-top:20px;	 
+}
+
+.table-list{
+	overflow-y: auto; 
+	width: 100%;
+	.table{
+		td,th{
+			border-bottom: 1px solid $lightGrey;
+			border-top: 1px solid $lightGrey;
+			font-size: 13px;
+			vertical-align: middle;
+			padding: 0.74em;
+
+			p{
+				margin-bottom: 5px;
+			}
+		}
+		thead{
+			th{
+				background-color: $whiteGrey;				
+				border-right: 1px solid $lightGrey;
+				color: $black;
+				
+				&:last-child{
+					border-right: none transparent;
+				}
+
+
+				&.center{
+					text-align: center;
+				}	
+			}
+		}
+		tbody{
+			tr{
+				&:hover{
+					background-color: $whiteGrey;
+				}
+
+				&.notReview{
+					color: $bluegrey;
+					//background-color: $bgLightGrey;
+
+					.boxText{
+						background-color: $grey;
+					}
+
+					.name-person{
+						color: $bluegrey;
+					}
+				}
+			}	
+		}		
+	}
+	.name{
+		color: $darkbluegrey;
+		font-size: 21px;
+		font-weight: 500;
+		margin-bottom: 5px;
+	}
+	.description{
+		color: $grey;
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 1.2em;
+		margin-bottom: 5px;
+	}
+	.name-person{
+		color: $darkbluegrey;
+		font-size: 14px;
+	}
+	.date{
+		font-size: 13px;
+		font-weight: 500;
+
+
+		span{
+			color: $grey;
+			font-weight: 400;
+		}
+	}
+	.btn-group{
+		.btn{			
+			position: relative;
+			z-index: 1;
+		}
+	}
+	.mainContact{
+		color: $redPale;
+	}
+	.reviewed-icon{
+		/*float: left;
+		line-height: 23px;
+		margin: 0 10px 0 0;
+
+		&+div{
+			float: left;
+			width: 90%;
+		}*/
+	}
+}
+
+.viewLead{
+	cursor: pointer;
+}
+
+.reviewed-icon{
+	font-size: 20px;
+	position: relative;
+
+	.fa-times-circle,
+	.fa-exclamation-circle{
+		color:$orange;
+	}
+	.fa-check-circle{
+		color:$green;
+	}
+}
+.call-icon{
+	position: relative;
+	/*width: 42px;*/
+
+	font-size: 20px;
+	
+	&.contact{
+		width: 42px;
+
+		.fa-ban{
+			top: 2px;
+		}
+	}
+
+	.fa-ban{
+		color: $redTools;
+		font-size: 30px;
+		left: 6px;
+		position: absolute;
+		top: -6px;
+		z-index: 2;
+		&.hidden{
+			display: none;
+		}
+	}
+	.fa-phone{
+		color: $darkbluegrey;
+		font-size: 18px;
+		position: relative;
+		z-index: 1;
+	}
+
+	.fa-times-circle{
+		color:$lgrey;
+	}
+	.fa-check-circle{
+		color:$green;
+	}
+
+	&.dont-call{		
+		//color: $redTools;
+	}
+	&.call{
+		//color: $green;
+	}
+}
+
+.hiddenEl{
+	display: none;
+}
+
+.boxText{
+	background-color: $grey;
+	border-radius: 3px;
+	color: $white;
+	display: inline-block;
+	font-size: 11px;
+	padding: 3px 8px;
+
+	.mat-form-field{
+		text-align: left;
+
+		.mat-form-field-infix{
+			padding: 0;
+			border-top: none transparent; 
+			width: 75px;
+		}
+		.mat-select-trigger{
+			//display: block;
+			.mat-select-value{
+				color: $white;
+				//display: inline;
+			}
+			.mat-select-arrow-wrapper{
+				//display: inline;
+				.mat-select-arrow{
+					color: $white;
+				}
+			}
+		}
+		.mat-input-underline{
+			display: none;
+		}
+		.mat-form-field-subscript-wrapper{
+			display: none;
+		}
+		
+	}
+	.mat-form-field-wrapper{
+		    padding-bottom: 0;
+	}
+}
+
+.type-campaign{
+	font-size: 12px;
+	font-weight: 500;
+	.fa-bullhorn{
+		background-color: $lightGrey;
+		border-radius: 20px;
+		color: $grey;
+		display: inline-block;
+		height: 23px;
+		padding: 5px;
+		vertical-align: middle;
+		width: 23px;
+	}
+}
+
+.statusColor--Red{
+	background-color: $redTools;
+
+	&.mat-snack-bar-container{
+		background-color:  $redTools;
+	}
+}
+.statusColor--Yellow{
+	background-color: $yellow;
+
+	&.mat-snack-bar-container{
+		background-color:  $yellow;
+	}
+}
+.statusColor--Grey{
+	background-color: $lgrey;
+}
+.statusColor--DarkBlue{
+	background-color: $darkBlue;
+}
+.statusColor--Green{
+	background-color: $green;
+
+	&.mat-snack-bar-container{
+		background-color:  $green;
+	}
+}
+.statusColor--Cyan{
+	background-color: $cyan;
+
+	&.mat-snack-bar-container{
+		background-color: $cyan;
+	}	
+}
+.statusColor--Purpure{
+	background-color: $purple;
+}
+.statusColor--Orange{
+	background-color: $orange;
+}
+
+/*checkbox material*/
+.overlay {
+	.mat-checkbox-checked.mat-accent,  
+	.mat-checkbox-indeterminate.mat-accent{
+		.mat-checkbox-background{
+			background-color: $redapp;
+		}
+		
+	}
+}
+
+
+/**/
+.menu-top{
+	.fa-layers-counter{
+		background:$black; 
+		right: -5px;
+		top: -5px;
+		-webkit-transform: scale(.6);
+	    transform: scale(.6);
+	    -webkit-transform-origin: top right;
+	}
+}
+
+
+/*cards  box view*/
+.card-box{
+	.title-box{
+		background: $darkbluegrey;
+		color: $white;		
+		position: relative;
+		padding: 20px 15px 15px;
+
+		&:before{
+			content: "";	
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 20px 20px 0 0;
+			border-color: $green transparent transparent transparent;
+
+			position: absolute;
+			top: 0;
+			left: 0;
+		}		
+
+		h3{
+			font-size: 16px;
+			font-weight: 500;
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	
+
+	.content-box{
+		padding: 10px;
+		border-bottom: 1px solid $greyB92;
+		
+		.name-box{
+			p{
+				margin: 0;
+				padding: 0;
+				line-height: 1.2em;
+			}
+			.name-inner{
+				font-size: 22px;
+				margin-bottom: 5px;
+				text-transform: capitalize;
+			}
+
+			.amount{
+				font-size: 14px;
+				margin-bottom: 5px;
+			}
+			.project{
+				color: $grey;
+				font-size: 14px;
+			}
+			.black{
+				color: $black;
+			}
+			.rating{
+				color: $grey;
+				font-size: 14px;
+				margin-bottom: 10px;
+
+				.highlight{
+					color: $yellow;
+				}
+			}
+		}
+		.inner-content-box{
+			.bottom-content{
+				margin-top: 20px;
+
+				p{
+					margin: 0;
+					padding: 0;
+				}
+				.date-box{
+					float: left;
+					font-size: 14px;
+					padding-top: 4px;
+				}
+				.buttons-box{
+					float: right;
+					text-align: right;
+
+					.btnApp{
+						width: 25px;
+					    font-size: 10px;
+					    text-align: center;
+					    padding: 4px;
+					    height: 25px;
+					}
+				}
+			}
+		}
+	}
+}
+.col-4{
+	&:nth-child(2){
+		.title-box{
+			&:before{
+				border-color: $cyan transparent transparent transparent;
+			}
+		}
+		
+	}
+	&:nth-child(3){
+		.title-box{
+			&:before{
+				border-color: $redPale transparent transparent transparent;
+			}
+		}
+	}
+}
+
+
+/*paginations styles*/
+.pagination{
+	font-size: 13px;
+	.ngx-pagination{
+		padding: 0;		
+		 .current{
+		 	background: $redapp;
+		 }
+	}
+}
+

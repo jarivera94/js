@@ -1,0 +1,39 @@
+{
+  "name": "mercurius",
+  "version": "0.1.0",
+  "description": "Dependencies",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Lorena Rojas, Ivan Garay, Eyleen Rodriguez, Jael Rivera, Jonathan Vega",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "~1.8.0",
+    "com.koghi.shalom": "^0.1.88",
+    "com.koghi.utilities": "^0.1.24",
+    "console-timestamp": "^0.3.0",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "~4.15.4",
+    "express-session": "~1.7.6",
+    "lodash": "^4.17.4",
+    "md5": "^2.2.1",
+    "method-override": "~2.2.0",
+    "moment": "^2.20.1",
+    "morgan": "~1.8.0",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "session-file-store": "^1.2.0",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "nodemon": "^1.18.3"
+  },
+  "publishConfig": {
+    "registry": "http://192.168.7.252:4873/"
+  }
+}

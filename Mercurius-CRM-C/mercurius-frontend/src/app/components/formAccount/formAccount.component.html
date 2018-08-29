@@ -1,0 +1,76 @@
+ <form #accountForm="ngForm" (ngSubmit)="formAccount()">
+        <div class="row">
+          <h2 class="title-overlay">{{!newItem ? 'Editar' : 'Nuevo'}} Cliente</h2>
+        </div>
+        
+        <div class="row">
+            <mat-form-field class="col-md-6 fixHeightInput" *ngIf="this.account.typeDocument!=='NIT'">
+              <input matInput placeholder="Nombre"  id="accountName" name="accountName" #accountName="ngModel" [(ngModel)]="account.name" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6 fixHeightInput" *ngIf="this.account.typeDocument!=='NIT'">
+              <input matInput placeholder="Apellido"  id="accountLastName" name="accountLastName" #accountLastName="ngModel" [(ngModel)]="account.lastName" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-12 fixHeightInput" *ngIf="this.account.typeDocument==='NIT'">
+              <input matInput placeholder="Nombre empresa"  id="accountName" name="accountName" #accountName="ngModel" [(ngModel)]="account.name" required>
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col-md-12 ">
+            <textarea matInput matTextareaAutosize matAutosizeMinRows="4"
+            matAutosizeMaxRows="6" placeholder="Descripción" id="accountDescription" name="accountDescription"  #accountDescription="ngModel" [(ngModel)]="account.description"></textarea>
+          </mat-form-field>
+        </div>
+
+
+        <div class="row">
+            <mat-form-field class="col-md-4 fixHeightInput">
+              <input matInput placeholder="Telefono"  id="accountPhone" name="accountPhone" #accountPhone="ngModel" [(ngModel)]="account.phone" pattern="[0-9]*" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4 fixHeightInput">
+              <input matInput placeholder="Direccion"  id="accountAddress" name="accountAddress" #accountAddress="ngModel" [(ngModel)]="account.address" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4 fixHeightInput">
+              <input matInput placeholder="Correo Electronico"  id="accountEmail" name="accountEmail" #accountEmail="ngModel" [(ngModel)]="account.email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required>
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field class="col-lg-4 fixHeightInput">
+              <mat-select placeholder="Tipo de documento"  id="accountDocumentType" name="accountDocumentType" #accountDocumentType="ngModel" [(ngModel)]="account.typeDocument" [compareWith]="compareSelectsName" required>
+                <mat-option [value]="null">Seleccionar Tipo</mat-option>
+                <mat-option *ngFor="let type of listDropdown.DocumentType" [value]="type.name">
+                  {{type.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-4 fixHeightInput">
+              <input matInput placeholder="Numero de documento"  id="accountDocumentNumber" name="accountDocumentNumber" #accountDocumentNumber="ngModel" [(ngModel)]="account.documentNumber" required>
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-4 fixHeightInput">
+              <mat-select placeholder="Campaña"  id="accountCampaign" name="accountCampaign" #accountCampaign="ngModel" [(ngModel)]="account.Campaign" [compareWith]="compareSelects" required>
+                <mat-option [value]="null">Seleccionar Campaña</mat-option>
+                <mat-option *ngFor="let campaign of campaigns" [value]="campaign">
+                  {{campaign.name}} <span>({{campaign.project.name}})</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+        
+      
+        <div class="buttons clearfix">
+          <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeOverlayEvent()">
+            <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+          </button>
+          <button type="submit" class="btn btnApp bgRedAppColor" [disabled]="!accountForm.form.valid" >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            {{newItem ? 'Crear Cliente' : 'Actualizar Cliente'}}
+          </button>
+        </div>
+    </form>

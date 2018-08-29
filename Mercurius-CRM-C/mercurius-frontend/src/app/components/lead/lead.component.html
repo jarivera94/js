@@ -1,0 +1,275 @@
+<div class="top-content clearfix">
+  <div class="container">
+    <div class="  float-left">
+      <h1 class="title-content">Leads</h1>
+    </div>
+    
+    <!--<div class="float-right">
+      <button type="button" class="btn btnApp bgRedAppColor float-right" (click)="edit = true; newItem = true; openOverlay()"><i class="fas fa-plus"></i> Nuevo Lead</button>
+    </div>-->
+
+  </div>
+</div>
+
+<!--begin filter -->
+<div class="filter-component ">
+  <div class="container clearfix">
+    <form>
+      <div class="filter-field float-left">
+        <div class="box-filter clearfix">
+          <p class="text float-left"><i class="fas fa-filter"></i> Filtrar</p>
+          <input type="text" name="" class="filter-input float-left" disabled/>
+        </div>
+      </div>
+      <div class="filter-buttons float-left">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-plus"></i> filtros</button>
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-caret-down"></i></button>
+        </div>
+        <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-th"></i></button>
+        <button type="button" class="btn btnApp bgRedAppColor" (click)="edit = true; newItem = true; openOverlay()"><i class="fas fa-plus"></i> Nuevo Lead</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!--end filter -->
+
+<div class="body-content clearfix">
+  <div class="container">
+    <div class="table-list">
+      <table class="table" style="width:1400px;">
+        <thead>
+          <tr>
+
+            <th align="center" class="center" scope="col">Rev.</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Fecha creación</th>
+            
+            <th align="center" class="center" scope="col">Correo</th>
+            <th align="center" class="center" scope="col">Tipo</th>
+            
+            <th align="center" class="center" scope="col">Campaña</th>
+            <th align="center" class="center" scope="col">Proyecto</th>
+            <th align="center" class="center" scope="col">Teléfono</th>
+            <th align="center" class="center" scope="col"><i class="fas fa-cog"></i></th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lead of leads | leadsConvertedFilter:'0' | paginate:{itemsPerPage: PAG_ITEMS_NUMBER, currentPage: page} " [ngClass]="{'notReview' : lead.reviewed === '0'}">
+
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(lead)">
+              
+              <div class="reviewed-icon" matTooltip="{{(lead.reviewed === '0') ? 'No Revizado': 'Revizado'}}">
+                <i class="fas"
+                  [ngClass]="{
+                  'fa-exclamation-circle':lead.reviewed === '0',
+                  'fa-check-circle':lead.reviewed === '1'
+                  }"
+                ></i> 
+
+              </div>
+            </td>
+            
+            <td class="viewLead" valign="middle" (click)="edit = false; newItem = false; openOverlay(lead)">              
+              
+                <p class="name-person" *ngIf="lead.salutation || lead.firstname || lead.lastname"><strong>{{lead.salutation}}</strong> {{lead.firstname}} {{lead.lastname}}</p>
+                <p>{{lead.description}}</p>
+              
+            </td>
+            
+            <td class="viewLead"  align="center" (click)="edit = false; newItem = false; openOverlay(lead)">              
+                {{lead.date_created | date:'MMM dd yyyy - hh:mm aa'}}              
+            </td>
+
+            <td class="viewLead"  align="center" (click)="edit = false; newItem = false; openOverlay(lead)">
+              <p>
+                {{lead.email1}}
+              </p>
+            </td>
+            
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(lead)">              
+              <span class="boxText" [ngClass]="{
+                'statusColor--Cyan' : lead.customer_type === 'Nuevo',
+                'statusColor--Purpure' : lead.customer_type === 'Antiguo'
+              }">
+                {{lead.customer_type}}
+              </span>
+            </td>
+            
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(lead)">{{lead.campaign.name}}</td>
+            
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(lead)">{{lead.project.name}}</td>
+            
+            <td class="viewLead" align="left" (click)="edit = false; newItem = false; openOverlay(lead)">
+              <p><i class="fas fa-phone" *ngIf="lead.phone_home"></i> {{lead.phone_home}}</p>
+              <p><i class="fas fa-mobile" *ngIf="lead.phone_mobile"></i> {{lead.phone_mobile}}</p>
+            </td>            
+            
+            
+            <td align="center"><div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+                <!--<label class="btn btnApp btnToolsGrey hiddenEl">
+                  <input type="checkbox" autocomplete="off"> <i class="fas fa-eye"></i>
+                </label>-->
+
+
+                <button class="btn btnApp btnToolsGrey" type="button" (click)="edit = true; newItem = false; openOverlay(lead)"> <i class="far fa-edit"></i></button>
+
+                <button class="btn btnApp btnToolsGrey" type="button" (click)="openAlert(lead)"> <i class="far fa-trash-alt"></i></button>
+            </div></td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination clearfix">
+        <div class="inner-pagination clearfix">
+          <pagination-controls (pageChange)="page = $event"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente">
+          </pagination-controls>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<!--begin overlay -->
+<div id="overlay" class="overlay" *ngIf="overlay" (click)="closeOverlay()">
+  <div class="inner-box-overlay tab-box" (click)="$event.stopPropagation()">
+    <!--begin content ovelay-->
+    <div class="box-content-overlay" [ngSwitch]="tabSelection">      
+      <!--begin info lead-->
+      <div class="content-tab-box" *ngSwitchCase="'info'">
+        
+        <ng-container *ngIf="edit">          
+
+          <ng-container *ngIf="editSection=='lead'">
+            <app-formLead [sectionParent]="section"  [lead]="lead" [listDropdown]="listDropdown" [newItem]="newItem" (closeEvent)="closeOverlay()" (msgSnackBar)="getMsgSnackBar($event)" (reloadEvent)="getLead()" (editEvent)="openEdit($event)" (changeEditSectionChild)="changeEditSection($event)"></app-formLead>
+          </ng-container>
+          
+          <ng-container *ngIf="editSection=='opportunity'">
+            <app-formOpportunity [sectionParent]="section" [lead]="lead" [opportunityInput]="" [newItem]="newItem" [listDropdown]="listDropdown"  (closeEvent)="closeOverlay()" (msgSnackBar)="getMsgSnackBar($event)" (reloadEvent)="getLead()" (editEvent)="openEdit($event)" (changeEditSectionChild)="changeEditSection($event)" (saveOpportunityforAccount)="keepOpportunityforAccount($event)"></app-formOpportunity>
+          </ng-container>
+
+          <ng-container *ngIf="editSection=='account'">
+            <app-formAccount [sectionParent]="section" [leadInput]="lead" [opportunityInput]="opportunity" [accountInput]="" [listDropdown]="listDropdown" [newItem]="newItem" (closeEvent)="closeOverlay()" (msgSnackBar)="getMsgSnackBar($event)" (reloadEvent)="getLead()" (editEvent)="openEdit($event)" (changeEditSectionChild)="changeEditSection($event)"></app-formAccount>
+          </ng-container>
+
+        </ng-container>
+
+        <ng-container *ngIf="!edit">
+          <app-viewLead  [lead]="lead"  (closeEvent)="closeOverlay()" (msgSnackBar)="getMsgSnackBar($event)" (reloadEvent)="getLead()" (editEvent)="openEdit($event)" ></app-viewLead>
+        </ng-container>
+
+      </div>
+      <!--end info lead-->
+      
+      <!--begin calls lead-->
+      <div class="content-tab-box" *ngSwitchCase="'calls'">
+        <div class="row">
+          <h2 class="title-overlay">Llamadas</h2>
+        </div>
+      </div>
+      <!--end calls lead-->
+
+      <!--begin documents lead-->
+      <div class="content-tab-box" *ngSwitchCase="'docs'">
+        <div class="row">
+          <h2 class="title-overlay">Documentos</h2>
+        </div>
+      </div>
+      <!--end documents lead-->
+
+      <!--begin mails lead-->
+      <div class="content-tab-box" *ngSwitchCase="'mails'">
+        <div class="row">
+          <h2 class="title-overlay">Correos</h2>
+        </div>
+      </div>
+      <!--end mails lead-->
+
+      <!--begin tasks lead-->
+      <div class="content-tab-box" *ngSwitchCase="'tasks'">
+        <div class="row">
+          <h2 class="title-overlay">Tareas</h2>
+        </div>
+      </div>
+      <!--end tasks lead-->
+
+      <!--begin meets lead-->
+      <div class="content-tab-box" *ngSwitchCase="'meets'">
+        <div class="row">
+          <h2 class="title-overlay">Reuniones</h2>
+        </div>
+      </div>
+      <!--end meets lead-->
+
+      <!--begin status lead-->
+      <div class="content-tab-box" *ngSwitchCase="'status'">
+        <div class="row">
+          <h2 class="title-overlay">Actividades</h2>
+        </div>
+      </div>
+      <!--end status lead-->
+
+    </div>
+    <!--end content ovelay-->
+    <!--begin tabs-->
+    <div class="tabs-overlay">
+        <ul>          
+          <li>
+            <a matTooltip="Información" matTooltipPosition="after" (click)="changeTabs('info'); edit=false" [class.selected]="tabSelection === 'info'"><i class="fas fa-newspaper"></i></a>
+          </li>          
+          <li *ngIf="!newItem">
+            <a matTooltip="Llamadas" matTooltipPosition="after" (click)="changeTabs('calls'); edit=false" [class.selected]="tabSelection === 'calls'"><i class="fas fa-phone"></i></a>
+          </li>         
+          <li *ngIf="!newItem">
+            <a matTooltip="Documentos" matTooltipPosition="after" (click)="changeTabs('docs'); edit=false" [class.selected]="tabSelection === 'docs'"><i class="far fa-file-alt"></i></a>
+          </li>
+          <li *ngIf="!newItem">
+            <a matTooltip="Correos" matTooltipPosition="after" (click)="changeTabs('mails'); edit=false" [class.selected]="tabSelection === 'mails'"><i class="fas fa-envelope"></i></a>
+          </li>
+         
+          <li *ngIf="!newItem">
+            <a matTooltip="Tareas" matTooltipPosition="after" (click)="changeTabs('tasks'); edit=false" [class.selected]="tabSelection === 'tasks'"><i class="fas fa-tasks"></i></a>
+          </li>
+          <li *ngIf="!newItem">
+            <a matTooltip="Reuniones" matTooltipPosition="after" (click)="changeTabs('meets'); edit=false" [class.selected]="tabSelection === 'meets'"><i class="fas fa-handshake"></i></a>
+          </li>          
+          <li *ngIf="!newItem">
+            <a matTooltip="Status" matTooltipPosition="after"  (click)="changeTabs('status'); edit=false" [class.selected]="tabSelection === 'status'"><i class="far fa-clock"></i></a>
+          </li>
+        </ul>
+    </div>
+    <!--end tabs-->
+  </div>
+</div>
+<!--end overlay -->
+
+
+
+<div id="alert" class="alert" *ngIf="alert">
+  <div class="inner-box-alert">
+    <form #leadFormDelete="ngForm" (ngSubmit)="formLeadDelete()">
+
+      <h2 class="title-alert">Desea borrrar el Lead actual?</h2>
+      <div class="row-form">
+        <p><strong>{{lead.salutation}}</strong> {{lead.firstname}} {{lead.lastname}}</p>
+      </div>
+      <div class="buttons clearfix">
+        <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeAlert()">
+          <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+        </button>
+        <button type="submit" class="btn btnApp bgRedAppColor">
+          <i class="fas fa-minus-circle" aria-hidden="true"></i>
+          Borrar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

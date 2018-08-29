@@ -1,0 +1,106 @@
+<div class="row">
+    <h2 class="title-overlay">{{!newItem ? 'Editar' : 'Nuevo'}} Lead</h2>
+</div>
+
+<form #leadForm="ngForm" (ngSubmit)="formLead()">
+          
+
+           <div class="row">
+            <mat-form-field class="col-md-12 desLeadTextarea">
+              <textarea matInput matTextareaAutosize matAutosizeMinRows="6"
+              matAutosizeMaxRows="6" placeholder="Descripción" id="leadDescription" name="leadDescription"  #leadDescription="ngModel" [(ngModel)]="lead.description" required></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+              <mat-form-field class="col-md-2 fixHeightInput">
+                <mat-select placeholder="Saludo"  id="leadSaludation" name="leadSaludation" #leadSaludation="ngModel" [(ngModel)]="lead.salutation" [compareWith]="compareSelectsNormal">
+                  <mat-option [value]="null">Saludo</mat-option>
+                  <mat-option *ngFor="let saludation of listDropdown.Saludo" [value]="saludation.value">
+                    {{saludation.value}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-5 fixHeightInput">
+                <input matInput placeholder="Nombre"  id="leadName" name="leadName" #leadName="ngModel" [(ngModel)]="lead.firstname" [required]="createSelection!== 'Lead'">
+              </mat-form-field>
+
+              <mat-form-field class="col-md-5 fixHeightInput">
+                <input matInput placeholder="Apellido"  id="leadLastName" name="leadLastName" #leadLastName="ngModel" [(ngModel)]="lead.lastname">
+              </mat-form-field>
+          </div>
+
+          <div class="row">
+            
+            <mat-form-field class="col-lg-6 fixHeightInput">
+              <input matInput placeholder="Correo Electronico" id="leadEmail" name="leadEmail" #leadEmail="ngModel" [(ngModel)]="lead.email1" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-3 fixHeightInput">              
+              <input matInput [matDatepicker]="picker" placeholder="Fecha de Creación" id="creationDateLead" name="creationDateLead" #creationDateLead="ngModel" [(ngModel)]="dateInput" (focus)="picker.open()">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker ></mat-datepicker>
+            </mat-form-field> 
+
+            <mat-form-field class="col-md-3 fixHeightInput">
+                <input matInput placeholder="Hora" type="time" id="timeLead" name="timeLead" #timeLead="ngModel" [(ngModel)]="hourInput" >
+              </mat-form-field>
+
+          </div>
+
+          <div class="row">
+            <mat-form-field class="col-lg-4 fixHeightInput">
+              <mat-select placeholder="Campaña"  id="leadCampaign" name="leadCampaign" #leadCampaign="ngModel" [(ngModel)]="lead.campaign" [compareWith]="compareSelects" [required]="createSelection!== 'Lead'">
+                <mat-option [value]="null">Seleccionar Campaña</mat-option>
+                <mat-option *ngFor="let campaign of campaigns" [value]="campaign">
+                  {{campaign.name}} <span>({{campaign.project.name}})</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-4 fixHeightInput">
+              <mat-select placeholder="Tipo de cliente"  id="leadStatus" name="leadStatus" #leadStatus="ngModel" [(ngModel)]="lead.customer_type" [compareWith]="compareSelectsValue">
+                <mat-option [value]="null">Seleccionar tipo</mat-option>
+                <mat-option *ngFor="let type of listDropdown.CustomerType" [value]="type">
+                  {{type.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-4 fixHeightInput">
+              <mat-select placeholder="Crear como"  id="leadSel" name="leadSel"  #leadSel="ngModel" [(ngModel)]="createSelection">                               
+                <mat-option value="Lead">Lead</mat-option>
+                <mat-option value="Oportunidad">Oportunidad</mat-option>                
+              </mat-select>
+            </mat-form-field>
+          </div>         
+
+       
+
+
+          <div class="row">
+            <mat-form-field class="col-lg-5 fixHeightInput">
+              <input matInput type="number" placeholder="Teléfono"  id="leadPhone" name="leadPhone" #leadPhone="ngModel" [(ngModel)]="lead.phone_home" pattern="[0-9]*">
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-5 fixHeightInput">
+              <input matInput type="number" placeholder="Celular"  id="cellPhoneLead" name="cellPhoneLead" #cellPhoneLead="ngModel" [(ngModel)]="lead.phone_mobile" pattern="[0-9]*">
+            </mat-form-field>
+
+            <div class="col-lg-2 paddingTopPhone ">          
+              <mat-checkbox id="leadReview" name="leadReview" #leadReview="ngModel" [(ngModel)]="reviewed">Revizado</mat-checkbox>         
+            </div>
+          </div>
+
+          <div class="buttons clearfix">
+            <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeOverlayEvent()">
+                <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+              </button>
+            
+            <button type="submit" class="btn btnApp bgRedAppColor" [disabled]="!leadForm.form.valid">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                {{ (newItem) ? 'Crear' : ( (createSelection=='Lead') ? 'Actualizar': 'Convertir a') }} {{createSelection}}
+              </button>
+          </div>
+        </form>

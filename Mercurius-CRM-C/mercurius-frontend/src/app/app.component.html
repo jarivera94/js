@@ -1,0 +1,71 @@
+<div class="backgroundTexture" *ngIf="loggedIn() && loggedUser">
+    
+    <div id="menuTop " class="menu-top clearfix">    	
+          
+      		<div class="list-menu">
+            <a class="mobile-menu d-lg-none d-xl-none"><i class="fas fa-bars"></i></a>
+      			<nav>
+      				<ul>
+  					    <li><a routerLink="dashboard" routerLinkActive="active">Dashboard</a></li>
+                <li><a routerLink="projects" routerLinkActive="active">Proyectos</a></li>
+  					    <li><a routerLink="campaigns" routerLinkActive="active">Campañas</a></li>
+                <!--<li><a routerLink="leads" routerLinkActive="active">Leads</a></li>-->
+                <li><a routerLink="accounts" routerLinkActive="active">Clientes</a></li>
+                <li><a routerLink="contacts" routerLinkActive="active">Contactos</a></li>
+                <li><a routerLink="opportunities" routerLinkActive="active">Oportunidades</a></li>
+                <!--<li><a href="#">Clientes</a></li>
+  					    <li><a href="#">Tareas</a></li>
+  					    <li><a href="#"><i class="fas fa-cog"></i></a></li>-->
+  					  </ul>
+      			</nav>
+      		</div>
+      		<div class="admin-menu">
+      			<div class="nameUser">
+  			    	<i class="fas fa-user"></i> <strong>Bienvenido</strong>, {{loggedUser.firstname}} {{loggedUser.lastname}}
+  				      
+  			    </div>
+      			<nav class="tools">
+      				<ul>
+  					    <li><a href="#" matTooltip="Tareas"><i class="fas fa-tasks"></i></a></li>
+  					    <li>
+                  <a href="#" matTooltip="Notificaciones">
+                    <span class="fa-layers fa-fw" >
+                      <i class="fas fa-bell"></i>
+                      <span class="fa-layers-counter" style="background:black">99</span>
+                    </span>
+                  </a>
+                </li>
+  					    <li><a href="#" matTooltip="Comentarios"><i class="fas fa-comment-alt"></i></a></li>
+                <li><a routerLink="settings" matTooltip="Configuración"><i class="fas fa-cog"></i></a></li>                
+  					    <li><a href="#" (click)="onLogout()" matTooltip="Salir"><i class="fas fa-sign-out-alt"></i></a></li>
+  					  </ul>
+      			</nav>
+      		</div>
+    
+    </div>
+    <div id="topBox" class="top-box clearfix">
+
+          <div class="col-md-3 float-left logo-top">
+            <a href="#"><img src="../assets/images/logo.png"></a>
+          </div>
+          <div class="col-md-4 float-right">
+            <form>
+              <div class="search-box">
+                <input type="text" name="search" placeholder="Buscar">
+              </div>
+            </form>
+          </div>
+      
+    </div>
+
+    <div id="content" class="content clearfix">
+
+     
+      <router-outlet></router-outlet>
+
+    </div>
+
+
+
+</div>
+<login *ngIf="!loggedIn()" (login)="onLogin($event)"></login>

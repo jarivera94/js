@@ -1,0 +1,7 @@
+
+/*Media querie mixing*/
+@mixin respond-to($media) {
+    @media only screen and #{$media} {
+        @content;
+    }
+}

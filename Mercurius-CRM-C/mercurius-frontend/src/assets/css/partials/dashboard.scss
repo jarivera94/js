@@ -1,0 +1,116 @@
+.user-activities{
+	background:$whiteGrey;
+	border-radius: 10px;
+	margin-bottom: 20px;
+	padding: 15px;
+
+	.name-user{		
+		.user-initials{
+			background-color:$orange;
+			
+			color: $white;
+			display: inline-block;
+			font-size: 16px;
+			font-style: italic;
+			font-weight: 700;
+			height: 35px;
+			padding: 5px;
+			text-align: center;
+			vertical-align: top;
+			width: 35px;
+		}
+		h2{
+			color: $darkestBluegrey;
+			display: inline-block;
+			font-size: 24px;
+			padding-top: 5px;
+    		padding-left: 10px;
+		}
+	}
+	.tasks-box{
+		margin-top: 20px;
+		padding-left: 50px;
+		.title-tasks{
+			color: $darkbluegrey;
+			border-bottom: 1px solid $lgrey;		
+
+			h3{
+				display: inline-block;
+				font-size: 18px;
+				margin-left: 5px;
+			}
+			.icon{
+			    background-color: $greyB92;
+			    border:1px solid $lgrey; 
+			    
+			    color:$darkbluegrey;
+			    display: inline-block;
+				font-size: 12px;
+			    height: 25px;
+			    padding: 2px;
+			    text-align: center;
+			    vertical-align: top;
+			    width: 25px;
+			}
+		}
+		.task-detail{			
+			font-size: 14px;
+			margin-left: 20px;
+			padding:10px 0;
+			position: relative;
+
+			&:after{
+				bottom:0; 
+				content: "";
+				background-color: $lightGrey;
+				display: block;
+				height: 1px;
+				left: 0;
+				position:absolute;
+				width: 100% ;
+			}
+
+			&:last-child{
+				&:after{
+					display: none;
+				}
+			}
+
+			.tile-detail{
+				color: $darkbluegrey;				
+				margin-bottom: 5px;
+
+				h4{
+					font-size: 14px;
+					display: inline-block;
+					margin: 0;
+					padding: 0;
+				}
+				.status-detail{
+					border-radius: 3px;
+				    color: $white;
+				    display: inline-block;
+				    font-size: 11px;
+				    padding: 3px 8px;
+				    margin:0 0 0 5px;
+				}
+			}
+			.info-detail{
+				p{
+					margin: 0;
+					font-size: 12px;
+
+					strong{
+						font-weight: 700;
+					}
+				}
+				.date{
+					color: $grey;
+					font-size: 12px;
+					font-style: italic;
+					font-weight: 700;
+				}
+			}
+		}
+	} 
+}

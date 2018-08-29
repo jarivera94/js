@@ -1,0 +1,62 @@
+<form #contactForm="ngForm" (ngSubmit)="formContact()">
+    <div class="row">
+      <h2 class="title-overlay">{{!newItem ? 'Editar Contacto' : 'Nuevo Contacto'}}</h2>
+    </div>
+    <div class="row">
+      <mat-form-field class="col-md-2">
+        <mat-select placeholder="Saludo"  id="contactSaludation" name="contactSaludation" #contactSaludation="ngModel" [(ngModel)]="contact.salutation">
+          <mat-option [value]="null">Saludo</mat-option>
+          <mat-option *ngFor="let saludation of listDropdown.Saludo" [value]="saludation.value">
+            {{saludation.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-5">
+        <input matInput placeholder="Nombre"  id="contactName" name="contactName" #contactName="ngModel" [(ngModel)]="contact.firstName" required>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-5">
+        <input matInput placeholder="Apellido"  id="contactLastName" name="contactLastName" #contactLastName="ngModel" [(ngModel)]="contact.lastName" required>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-6 ">
+        <input matInput type="number" placeholder="Teléfono" id="contactPhoneHome" name="contactPhoneHome" #contactPhoneHome="ngModel" [(ngModel)]="contact.phoneHome" pattern="[0-9]*">
+      </mat-form-field>
+
+      <mat-form-field class="col-6">
+        <input matInput type="number" placeholder="Celular" id="contactPhoneMobile" name="contactPhoneMobile" #contactPhoneMobile="ngModel" [(ngModel)]="contact.phoneMobile" pattern="[0-9]*">
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-lg-5">
+        <input matInput placeholder="Correo" id="contactEmail" name="contactEmail" #contactEmail="ngModel" [(ngModel)]="contact.email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+      </mat-form-field>
+
+      <mat-form-field class="col-lg-5">
+          <mat-select placeholder="Cuenta"  id="contactAccount" name="contactAccount"  #contactAccount="ngModel" [(ngModel)]="contact.Account" [compareWith]="compareSelects" required>
+            <mat-option [value]="null">Seleccionar Cuenta</mat-option>
+            <mat-option *ngFor="let account of accounts" [value]="account">
+              {{account.name}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <div class="col-lg-2 paddingTopPhone ">          
+          <mat-checkbox id="contactMainCheck" name="contactMainCheck" #contactMainCheck="ngModel" [(ngModel)]="mainContact">Principal</mat-checkbox>         
+        </div>          
+    </div>        
+
+    <div class="buttons clearfix">
+      <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeOverlayEvent()">
+        <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+      </button>
+      <button type="submit" class="btn btnApp bgRedAppColor" [disabled]="!contactForm.form.valid" >
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        {{!newItem ? 'Actualizar' : 'Crear'}} Contacto
+      </button>
+    </div>
+</form>

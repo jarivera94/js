@@ -1,0 +1,223 @@
+<div class="top-content clearfix">
+  <div class="container">
+    <div class="  float-left">
+      <h1 class="title-content">Campañas</h1>
+    </div>
+    
+    <!--<div class="float-right">
+      <button type="button" class="btn btnApp bgRedAppColor float-right" (click)="edit = false; openOverlay()"><i class="fas fa-plus"></i> Nueva campaña</button>
+    </div>-->
+
+  </div>
+</div>
+
+<!--begin filter -->
+<div class="filter-component ">
+  <div class="container clearfix">
+    <form>
+      <div class="filter-field float-left">
+        <div class="box-filter clearfix">
+          <p class="text float-left"><i class="fas fa-filter"></i> Filtrar</p>
+          <input type="text" name="" class="filter-input float-left" disabled/>
+        </div>
+      </div>
+      <div class="filter-buttons float-left">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-plus"></i> filtros</button>
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-caret-down"></i></button>
+        </div>
+        <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-th"></i></button>
+        <button type="button" class="btn btnApp bgRedAppColor" (click)="edit = false; openOverlay()"><i class="fas fa-plus"></i> Nueva campaña</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!--end filter -->
+
+<div class="body-content clearfix">
+  <div class="container">
+    <div class="table-list">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre Campaña</th>
+            <th class="center"  align="center" scope="col">Tipo</th>
+            <th class="center"  align="center" scope="col">Proyecto</th>
+            <th class="center"  align="center" scope="col">Estado</th>
+            <th class="center"  align="center" scope="col">Presupuesto</th>
+            <th class="center" align="center"  scope="col">Costo actual</th>
+            <th class="center"  align="center" scope="col"><i class="fas fa-cog"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let campaign of campaigns | paginate:{itemsPerPage: PAG_ITEMS_NUMBER, currentPage: page}" >
+            <td valign="middle">
+              <p class="name">{{campaign.name}}</p>
+              <p class="description">{{campaign.description}}</p>
+              <p *ngIf ="campaign.startDate" class="date">Fecha de Inicio : <span>{{campaign.startDate | date:'dd MMM yyyy'}}</span></p>
+              <p *ngIf ="campaign.endDate" class="date">Fecha final : <span>{{campaign.endDate | date:'dd MMM yyyy' }}</span></p>
+
+            </td>
+            <td align="center"><span class="type-campaign"> {{campaign.type.value}}</span></td>
+            <td align="center">{{campaign.project.name}}</td>
+            <td align="center">
+              <span class="boxText" [ngClass]="{
+                'statusColor--Yellow' : campaign.status.name === 'Planning',
+                'statusColor--Red' : campaign.status.name === 'Active',
+                'statusColor--Grey' : campaign.status.name === 'Inactive',
+                'statusColor--DarkBlue' : campaign.status.name === 'Complete',
+                'statusColor--Green' : campaign.status.name === 'In Queue',
+                'statusColor--Cyan' : campaign.status.name === 'Sending'
+              }">
+
+
+                <mat-form-field>
+                  <mat-select id="campaignStatus" name="campaignStatus" #campaignStatus="ngModel" [(ngModel)]="campaign.status" [compareWith]="compareSelectsName" (ngModelChange)="updateCampaign(campaign)">
+                    <mat-option [value]="null" disabled>Seleccionar estado</mat-option>
+                    <mat-option *ngFor="let stateCampaign of campaignOptions.statesCampaigns" [value]="stateCampaign.name">
+                      {{stateCampaign.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </span>
+
+
+            </td>
+            <td align="center">$ {{campaign.budget | number:0 | pointReplacer }}</td>
+            <td align="center">$ {{campaign.actualCost | number:0  | pointReplacer }}</td>
+            <td align="center"><div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <!--<label class="btn btnApp btnToolsGrey hiddenEl">
+                  <input type="checkbox" autocomplete="off"> <i class="fas fa-eye"></i>
+                </label>-->
+
+                <button class="btn btnApp btnToolsGrey" type="button" (click)="edit = true; openOverlay(campaign)"> <i class="far fa-edit"></i></button>
+
+                <button class="btn btnApp btnToolsGrey" type="button" (click)="openAlert(campaign)"> <i class="far fa-trash-alt"></i></button>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="pagination clearfix">
+        <div class="inner-pagination clearfix">
+          <pagination-controls (pageChange)="page = $event"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente">
+          </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="overlay" class="overlay" *ngIf="overlay">
+  <div class="inner-box-overlay">
+
+    <form  #campaignForm="ngForm" (ngSubmit)="formCampaign()">
+        <div class="row">
+          <h2 class="title-overlay">{{edit ? 'Editar Campaña' : 'Nueva Campaña'}}</h2>
+        </div>
+
+        <div class="row">          
+          <mat-form-field class="col-lg-6">
+            <input matInput placeholder="Nombre de la campaña"  id="campaignName" name="campaignName" #campaignName="ngModel" [(ngModel)]="campaign.name" required>
+          </mat-form-field>
+
+          <mat-form-field class="col-lg-6">
+            <mat-select placeholder="Estado de la campaña" id="campaignStatus" name="campaignStatus" #campaignStatus="ngModel" [(ngModel)]="campaign.status" [compareWith]="compareSelectsName" required>
+              <mat-option [value]="null">Seleccionar estado</mat-option>
+              <mat-option *ngFor="let stateCampaign of campaignOptions.statesCampaigns" [value]="stateCampaign.name">
+                {{stateCampaign.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>          
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col-lg-12">
+            <textarea matInput matTextareaAutosize matAutosizeMinRows="2"
+            matAutosizeMaxRows="4" placeholder="Descripción de la campaña" id="campaignDescription" name="campaignDescription" #campaignDescription="ngModel" [(ngModel)]="campaign.description"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="row">  
+          <mat-form-field class="col-lg-6">
+            <input matInput [matDatepicker]="picker" placeholder="Fecha Inicio" id="campaignStartDate" name="campaignStartDate" #campaignStartDate="ngModel" [(ngModel)]="campaign.startDate"  (dateChange)="comparateDates($event)"  (focus)="picker.open()"  >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker ></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="col-lg-6">
+            <input matInput  [matDatepicker]="picker2" placeholder="Fecha Fin" id="campaignEndDate" name="campaignEndDate" #campaignEndDate="ngModel" [(ngModel)]="campaign.endDate"  (dateChange)="comparateDates($event)" (focus)="picker2.open()"  [min]="campaign.startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col-lg-6">
+            <mat-select placeholder="Tipo"  id="campaignType" name="campaignType" #campaignType="ngModel" [(ngModel)]="campaign.type" [compareWith]="compareSelectsName" required>
+              <mat-option [value]="null">Seleccionar Tipo</mat-option>
+              <mat-option *ngFor="let typeCampaign of campaignOptions.typesCampaigns" [value]="typeCampaign.name">
+                {{typeCampaign.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="col-lg-6">
+            <mat-select placeholder="Proyecto"  id="campaignProject" name="campaignProject"  #campaignProject="ngModel" [(ngModel)]="campaign.project" [compareWith]="compareSelects">
+              <mat-option [value]="null">Seleccionar Proyecto</mat-option>
+              <mat-option *ngFor="let project of projects" [value]="project">
+                {{project.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col-lg-6">
+            <input matInput currencyMask placeholder="Presupuesto"  id="campaignBudget" name="campaignBudget" #campaignBudget="ngModel" [(ngModel)]="campaign.budget">
+            
+          </mat-form-field>
+
+          <mat-form-field class="col-lg-6">
+            <input matInput currencyMask placeholder="Costo actual" id="campaignCost" name="campaignCost" #campaignCost="ngModel" [(ngModel)]="campaign.actualCost">
+          </mat-form-field>
+        </div>
+
+        <div class="buttons clearfix">
+          <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeOverlay()">
+            <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+          </button>
+          <button type="submit" class="btn btnApp bgRedAppColor" [disabled]="!campaignForm.form.valid && validDates" >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            {{edit ? 'Actualizar' : 'Crear'}}
+          </button>
+        </div>
+    </form>
+  </div>
+</div>
+
+<div id="alert" class="alert" *ngIf="alert">
+  <div class="inner-box-alert">
+    <form #campaignFormDelete="ngForm" (ngSubmit)="formCampaignDelete()">
+
+      <h2 class="title-alert">Desea borrar la campaña actual?</h2>
+      <div class="row-form">
+          <p>{{campaign.name}}</p>
+      </div>
+      <div class="buttons clearfix">
+        <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeAlert()">
+          <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+        </button>
+        <button type="submit" class="btn btnApp bgRedAppColor" >
+          <i class="fas fa-minus-circle" aria-hidden="true"></i>
+          Borrar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

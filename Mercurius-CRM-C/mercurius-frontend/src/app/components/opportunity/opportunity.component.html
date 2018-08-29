@@ -1,0 +1,283 @@
+<div class="top-content clearfix">
+  <div class="container">
+    <div class="  float-left">
+      <h1 class="title-content">Oportunidades</h1>
+    </div>
+    
+    <!--<div class="float-right">
+      <button type="button" class="btn btnApp bgRedAppColor float-right" (click)="edit = true; newItem = true; openOverlay()"><i class="fas fa-plus"></i> Nueva Oportunidad</button>
+    </div>-->
+  </div>
+</div>
+
+<!--begin filter -->
+<div class="filter-component ">
+  <div class="container clearfix">
+    <form>
+      <div class="filter-field float-left">
+        <div class="box-filter clearfix">
+          <p class="text float-left"><i class="fas fa-filter"></i> Filtrar</p>
+          <input type="text" name="" class="filter-input float-left" disabled/>
+        </div>
+      </div>
+      <div class="filter-buttons float-left">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-plus"></i> filtros</button>
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-caret-down"></i></button>
+        </div>
+        <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-th"></i></button>
+        <button type="button" class="btn btnApp bgRedAppColor" (click)="edit = true; newItem = true; openOverlay()"><i class="fas fa-plus"></i> Nueva Oportunidad</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!--end filter -->
+
+<div class="body-content clearfix">
+  <!--begin table view-->
+  <div class="container"  *ngIf="!cards">
+    <div class="table-list" >
+      <table class="table"  style="width:1900px;">
+        <thead>
+          <tr>
+
+            <th scope="col">Nombre</th>
+            <th class="center" align="center"  scope="col">Cuenta</th>
+            <th class="center"  align="center" scope="col">Email</th>
+            <th class="center"  align="center" scope="col">Apartamentos</th>
+            <th class="center" align="center"  scope="col">Proyecto</th>
+            <th class="center"  align="center" scope="col">Negociacion</th>
+            <th class="center"  align="center" scope="col">Estado de la venta</th>
+            <th class="center"  align="center" scope="col">Probabilidad</th>
+            
+            <th class="center"  align="center" scope="col"><i class="fas fa-cog"></i></th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let opportunity of opportunities  | paginate:{itemsPerPage: PAG_ITEMS_NUMBER, currentPage: page}">
+            <td class="viewLead" valign="middle" (click)="edit = false; newItem = false; openOverlay(opportunity)">
+               <p>{{opportunity.salutation}} {{opportunity.name}} {{opportunity.lastName}}</p>
+               <p>{{opportunity.description}} </p>
+            </td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(opportunity)">
+              {{opportunity.account.name}}
+            </td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(opportunity)">{{opportunity.email }}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(opportunity)">{{opportunity.apartments}}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(opportunity)">{{opportunity.project.name}}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(opportunity)">{{opportunity.negotiation}}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(opportunity)">{{opportunity.salesStage}}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(opportunity)">{{opportunity.probability}}</td>
+            
+            <td align="center"><div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+                <!--<label class="btn btnApp btnToolsGrey hiddenEl">
+                  <input type="checkbox" autocomplete="off"> <i class="fas fa-eye"></i>
+                </label>-->
+
+
+                <button class="btn btnApp btnToolsGrey" type="button" (click)="edit = true; openOverlay(opportunity)"> <i class="far fa-edit"></i></button>
+
+                <button class="btn btnApp btnToolsGrey" type="button" (click)="openAlert(opportunity)"> <i class="far fa-trash-alt"></i></button>
+            </div></td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination clearfix"  >
+        <div class="inner-pagination clearfix">
+          <pagination-controls (pageChange)="page = $event"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente">
+          </pagination-controls>
+      </div>
+    </div>
+  </div>
+  <!--end table view-->
+
+  <!--begin card box view-->
+  <div class="container" *ngIf="cards">
+    <div class="row">
+
+      <div class="col-4" *ngFor="let stage of stagesOpportunities">
+        <div class="card-box">
+          <div class="title-box">
+            <h3>{{stage.value}}</h3>
+          </div>
+          
+          <div class="content-box"  *ngFor="let opportunity of opportunities  | opportunitiesFilter:stage.name">
+            <div class="name-box viewLead" (click)="edit = false; newItem = false; openOverlay(opportunity)">
+              <p class="name-inner">{{opportunity.name}} {{opportunity.lastName}}</p>
+              <p class="rating">
+                <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 20}"><i class="fas fa-star"></i></span>
+                <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 40}"><i class="fas fa-star"></i></span>
+                <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 60}"><i class="fas fa-star"></i></span>
+                <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 80}"><i class="fas fa-star"></i></span>
+                <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 100}"><i class="fas fa-star"></i></span>
+                <span> {{opportunity.probability}}%</span>
+              </p>
+              <p class="amount account"><i class="fas fa-user-circle"></i> {{opportunity.account.name}} </p> 
+              <p class="amount">{{opportunity.campaign.name}} <strong class="black">{{opportunity.project.name}}</strong></p>
+              <p class="project">Email: {{opportunity.email}}</p>
+            </div>
+            <div class="inner-content-box">
+              <div class="bottom-content clearfix">
+                <p class="date-box viewLead" (click)="edit = false; newItem = false; openOverlay(opportunity)">
+                  
+                </p>
+                <p class="buttons-box">
+                  <button class="btn btnApp btnToolsGrey" type="button" (click)="edit = true; openOverlay(opportunity)"> <i class="far fa-edit"></i></button>
+
+                  <button class="btn btnApp btnToolsGrey" type="button" (click)="openAlert(opportunity)"> <i class="far fa-trash-alt"></i></button>
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--end card box view-->
+
+</div>
+
+<!--begin overlay -->
+<div id="overlay" class="overlay" *ngIf="overlay" (click)="closeOverlay()">
+  <div class="inner-box-overlay tab-box" (click)="$event.stopPropagation()">
+    <!--begin content ovelay-->
+    <div class="box-content-overlay" [ngSwitch]="tabSelection">      
+      <!--begin info opportunity-->
+      <div class="content-tab-box" *ngSwitchCase="'info'">         
+          
+          <ng-container *ngIf="edit"> 
+            
+            <ng-container *ngIf="editSection=='opportunity'">
+              <app-formOpportunity [sectionParent]="section" [lead]="" [opportunityInput]="opportunity" [listDropdown]="listDropdown" [newItem]="newItem" (closeEvent)="closeOverlay()" (msgSnackBar)="getMsgSnackBar($event)" (reloadEvent)="getOpportunities()" (editEvent)="openEdit($event)" (changeEditSectionChild)="changeEditSection($event)"></app-formOpportunity>            
+            </ng-container>
+            
+            <ng-container *ngIf="editSection=='account'">
+              <app-formAccount [sectionParent]="section" [leadInput]="" [opportunityInput]="opportunity" [accountInput]="" [listDropdown]="listDropdown" [newItem]="newItem" (closeEvent)="closeOverlay()" (msgSnackBar)="getMsgSnackBar($event)" (reloadEvent)="getOpportunities()" (editEvent)="openEdit($event)" (changeEditSectionChild)="changeEditSection($event)"></app-formAccount>
+            </ng-container>
+
+          </ng-container>
+
+          <ng-container *ngIf="!edit">
+
+            <app-viewOpportunity  [opportunity]="opportunity" [listDropdown]="listDropdown" (closeEvent)="closeOverlay()"  (reloadEvent)="getOpportunities()" (editEvent)="openEdit($event)" >
+              
+            </app-viewOpportunity>
+
+          </ng-container>     
+
+      </div>
+      <!--end info opportunity-->
+      
+      <!--begin calls opportunity-->
+      <div class="content-tab-box" *ngSwitchCase="'calls'">
+        <div class="row">
+          <h2 class="title-overlay">Llamadas</h2>
+        </div>
+      </div>
+      <!--end calls opportunity-->
+
+      <!--begin documents opportunity-->
+      <div class="content-tab-box" *ngSwitchCase="'docs'">
+        <div class="row">
+          <h2 class="title-overlay">Documentos</h2>
+        </div>
+      </div>
+      <!--end documents opportunity-->
+
+      <!--begin mails opportunity-->
+      <div class="content-tab-box" *ngSwitchCase="'mails'">
+        <div class="row">
+          <h2 class="title-overlay">Correos</h2>
+        </div>
+      </div>
+      <!--end mails opportunity-->
+
+      <!--begin tasks opportunity-->
+      <div class="content-tab-box" *ngSwitchCase="'tasks'">
+        <div class="row">
+          <h2 class="title-overlay">Tareas</h2>
+        </div>
+      </div>
+      <!--end tasks opportunity-->
+
+      <!--begin meets opportunity-->
+      <div class="content-tab-box" *ngSwitchCase="'meets'">
+        <div class="row">
+          <h2 class="title-overlay">Reuniones</h2>
+        </div>
+      </div>
+      <!--end meets opportunity-->
+
+      <!--begin status opportunity-->
+      <div class="content-tab-box" *ngSwitchCase="'status'">
+        <div class="row">
+          <h2 class="title-overlay">Actividades</h2>
+        </div>
+      </div>
+      <!--end status opportunity-->
+
+    </div>
+    <!--end content ovelay-->
+    <!--begin tabs-->
+    <div class="tabs-overlay">
+        <ul>          
+          <li>
+            <a matTooltip="Información" matTooltipPosition="after" (click)="changeTabs('info'); edit=false" [class.selected]="tabSelection === 'info'"><i class="fas fa-newspaper"></i></a>
+          </li>          
+          <li *ngIf="!newItem">
+            <a matTooltip="Llamadas" matTooltipPosition="after" (click)="changeTabs('calls'); edit=false" [class.selected]="tabSelection === 'calls'"><i class="fas fa-phone"></i></a>
+          </li>         
+          <li *ngIf="!newItem">
+            <a matTooltip="Documentos" matTooltipPosition="after" (click)="changeTabs('docs'); edit=false" [class.selected]="tabSelection === 'docs'"><i class="far fa-file-alt"></i></a>
+          </li>
+          <li *ngIf="!newItem">
+            <a matTooltip="Correos" matTooltipPosition="after" (click)="changeTabs('mails'); edit=false" [class.selected]="tabSelection === 'mails'"><i class="fas fa-envelope"></i></a>
+          </li>
+         
+          <li *ngIf="!newItem">
+            <a matTooltip="Tareas" matTooltipPosition="after" (click)="changeTabs('tasks'); edit=false" [class.selected]="tabSelection === 'tasks'"><i class="fas fa-tasks"></i></a>
+          </li>
+          <li *ngIf="!newItem">
+            <a matTooltip="Reuniones" matTooltipPosition="after" (click)="changeTabs('meets'); edit=false" [class.selected]="tabSelection === 'meets'"><i class="fas fa-handshake"></i></a>
+          </li>          
+          <li *ngIf="!newItem">
+            <a matTooltip="Status" matTooltipPosition="after"  (click)="changeTabs('status'); edit=false" [class.selected]="tabSelection === 'status'"><i class="far fa-clock"></i></a>
+          </li>
+        </ul>
+    </div>
+    <!--end tabs-->
+  </div>
+</div>
+<!--end overlay -->
+
+<div id="alert" class="alert" *ngIf="alert">
+  <div class="inner-box-alert">
+    <form #opportunityFormDelete="ngForm" (ngSubmit)="formOpportunityDelete()">
+
+      <h2 class="title-alert">Desea borrrar la oportunidad actual?</h2>
+      <div class="row-form">
+        <p>{{opportunity.name}}</p>
+      </div>
+      <div class="buttons clearfix">
+        <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeAlert()">
+          <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+        </button>
+        <button type="submit" class="btn btnApp bgRedAppColor">
+          <i class="fas fa-minus-circle" aria-hidden="true"></i>
+          Borrar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

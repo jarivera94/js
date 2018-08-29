@@ -1,0 +1,147 @@
+<div class="row">
+    <h2 class="title-overlay">{{newItem ? 'Nueva' : 'Editar'}} Oportunidad</h2>
+</div>
+
+<form #opportunityForm="ngForm" (ngSubmit)="formOpportunity()">
+  <div class="row">
+
+      <mat-form-field class="col-md-4 fixHeightInput">
+        <input matInput placeholder="Nombre"  id="opportunityName" name="opportunityName" #opportunityName="ngModel" [(ngModel)]="opportunity.name">
+      </mat-form-field>
+
+      <mat-form-field class="col-md-5 fixHeightInput">
+        <input matInput placeholder="Apellido"  id="opportunityLastName" name="opportunityLastName" #opportunityLastName="ngModel" [(ngModel)]="opportunity.lastName">
+      </mat-form-field>
+
+      <div class="col-lg-3 paddingTopPhone ">          
+        <mat-checkbox id="opportunityLegalPerson" name="opportunityLegalPerson" #opportunityLegalPerson="ngModel" [(ngModel)]="legalPerson">Persona Juridica</mat-checkbox>         
+      </div>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="col-md-12 ">
+      <textarea matInput matTextareaAutosize matAutosizeMinRows="4"
+      matAutosizeMaxRows="6" placeholder="Descripción" id="opportunityDescription" name="opportunityDescription"  #opportunityDescription="ngModel" [(ngModel)]="opportunity.description" required></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field class="col-md-12 ">
+      <textarea matInput matTextareaAutosize matAutosizeMinRows="4"
+      matAutosizeMaxRows="6" placeholder="Negociación" id="opportunityNegotiation" name="opportunityNegotiation"  #opportunityNegotiation="ngModel" [(ngModel)]="opportunity.negotiation" required></textarea>
+    </mat-form-field>
+  </div>
+
+  
+
+  <div class="row">
+    
+    <mat-form-field class="col-lg-4 fixHeightInput">
+      <input matInput placeholder="Correo Electronico" id="opportunityEmail" name="opportunityEmail" #opportunityEmail="ngModel" [(ngModel)]="opportunity.email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+    </mat-form-field>
+
+    <mat-form-field class="col-lg-4 fixHeightInput">
+      <mat-select placeholder="Estado de la venta" id="opportunitySalesStage" name="opportunitySalesStage" #opportunitySalesStage="ngModel" [(ngModel)]="opportunity.salesStage" [compareWith]="compareSelects" (change)="changeProbability($event)" required>
+        <mat-option [value]="null">Seleccionar Estado</mat-option>
+        <mat-option  *ngFor="let state of listDropdown.StateSale" [value]="state.name">
+          {{state.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="col-lg-4 fixHeightInput">
+      <input matInput placeholder="Probabilidad (%)" id="opportunityProbability" name="opportunityProbability" #opportunityProbability="ngModel" [(ngModel)]="opportunity.probability">
+    </mat-form-field>             
+
+
+  </div>
+
+   <div class="row">
+
+    <!--<mat-form-field class="col-lg-4 fixHeightInput">
+      <input type="text" placeholder="Cliente" aria-label="Account"  matInput  [matAutocomplete]="accountAutocomplete"  id="opportunityAccount" name="opportunityAccount" #opportunityAccount="ngModel" [(ngModel)]="nameAccount" (ngModelChange)="reNameAccount($event)">
+      <mat-autocomplete #accountAutocomplete="matAutocomplete">
+        <mat-option *ngFor="let account of accounts" [value]="account">
+          {{ account.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>-->
+
+    <!--<mat-form-field class="col-lg-4 fixHeightInput">
+      <input type="text" placeholder="Apartamentos" aria-label="Deparment"  matInput [matAutocomplete]="deparmentsAutocomplete"  id="opportunityDeparments" name="opportunityDeparments" #opportunityDeparments="ngModel" [(ngModel)]="opportunity.apartamentos_c">
+      <mat-autocomplete #deparmentsAutocomplete="matAutocomplete" multiple>
+        <mat-option *ngFor="let department of departmentsList" [value]="department">
+          {{ department }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>-->
+
+    <!--<mat-form-field class="col-lg-4 fixHeightInput">
+      <mat-chip-list #chipList>
+          <mat-chip *ngFor="let value of statusSelected" (remove)="removeStatus(value)">
+              {{value}} <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input [matChipInputFor]="chipList"
+                 [matAutocomplete]="auto">
+      </mat-chip-list>
+
+      <mat-chip-list #chipList >
+        <mat-chip>Papadum</mat-chip>
+        <mat-chip>Naan</mat-chip>
+        <mat-chip>Dal</mat-chip>
+        
+      </mat-chip-list>-->
+      
+      <!--<input placeholder="Apartamentos" [matChipInputFor]="chipList" [matAutocomplete]="auto">
+      
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addStatus($event)">
+
+      <mat-autocomplete #auto="matAutocomplete" >
+          <mat-option *ngFor="let department of departmentsAvailableList" [value]="department">
+              <span>{{ department }}</span>
+          </mat-option>
+      </mat-autocomplete>
+  </mat-form-field>-->
+  
+  <mat-form-field class="col-lg-4 fixHeightInput">
+    <mat-select placeholder="Campaña" id="opportunityCampaign" name="opportunityCampaign" #opportunityCampaign="ngModel" [(ngModel)]="opportunity.campaign" [compareWith]="compareSelects" (ngModelChange)="refreshDepartmentList($event)" required>
+      <mat-option [value]="null">Seleccionar Campaña</mat-option>
+      <mat-option  *ngFor="let campaign of campaigns" [value]="campaign">
+        {{campaign.name}} <span>({{campaign.project.name}})</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="col-lg-4 fixHeightInput">
+    <mat-select placeholder="Apartamentos" id="opportunityDeparments" name="opportunityDeparments" #opportunityDeparments="ngModel" [(ngModel)]="selectedDepartments" multiple>
+      
+      <mat-option *ngFor="let department of departmentsList" [value]="department">
+          {{ department }}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="col-lg-4 fixHeightInput">
+    <mat-select placeholder="Cliente" id="opportunityAccount" name="opportunityAccount" #opportunityAccount="ngModel" [(ngModel)]="opportunity.account" [compareWith]="compareSelects">
+      <mat-option [value]="null">Seleccionar Cliente</mat-option>
+      <mat-option *ngFor="let account of accounts" [value]="account">
+          {{ account.name }}
+        </mat-option>
+    </mat-select>
+  </mat-form-field>   
+   
+
+   </div>  
+
+
+  <div class="buttons clearfix">
+    <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeOverlayEvent()">
+        <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+      </button>
+    
+    <button type="submit" class="btn btnApp bgRedAppColor" [disabled]="!opportunityForm.form.valid">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        {{ (newItem) ? (legalPerson && !opportunity.account.id) ? 'Crear Cliente' : 'Crear Oportunidad'  : 'Actualizar Oportunidad' }} 
+      </button>
+  </div>
+</form>

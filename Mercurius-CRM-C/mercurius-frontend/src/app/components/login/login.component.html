@@ -1,0 +1,25 @@
+<div class="login-bkg">
+  <div class="login-box">
+    <div class="inner-loggin-box float-right">
+      <form (ngSubmit)="onLogin()">
+        <img src="../assets/images/logo-login.png" class="logo-log">
+        <div class="form-group">
+          <span class="" aria-hidden="true"></span>
+          <label for="usernameInput">Nombre de Usuario</label>
+          <input id="usernameInput" #username="ngModel" [(ngModel)]="user.username" class="form-control form-control-sm" placeholder="Usuario" required autofocus name="username">
+        </div>
+        <div class="form-group">
+          <span class="" aria-hidden="true"></span>
+          <label for="passwordInput">Contraseña</label>
+          <input id="passwordInput" #password="ngModel" [(ngModel)]="user.password" class="form-control form-control-sm" placeholder="Contraseña" required type="password" name="password">
+        </div>
+        <div class="form-group buttonForm">
+          <button class="btn btnApp bgRedAppColor" type="submit">
+           <i class="fas fa-plus"></i> Entrar
+          </button>
+        </div>
+        <br/> {{errorMessage}}
+      </form>
+    </div>
+  </div>
+</div>

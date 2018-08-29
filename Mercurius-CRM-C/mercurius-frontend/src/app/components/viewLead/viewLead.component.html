@@ -1,0 +1,57 @@
+<div class="view-info">
+  <div class="row">
+    <div class="col-12">
+     <button type="button" class="btn badge bgRedAppColor float-right" (click)="editLead()">
+        <i class="fas fa-pencil-alt"></i> Editar
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-2">
+        <div class="rounded-circle statusColor--Orange InitialsCircle" *ngIf="lead.firstname || lead.lastname">{{ lead.firstname | initialCharts | uppercase}}{{ lead.lastname | initialCharts | lowercase }}</div>
+        <div class="rating">
+          </div>
+      </div>
+      <div class="col-md-10">
+        <div class="row">
+       
+          <h2 class="title-name" *ngIf="lead.salutation || lead.firstname || lead.lastname">{{lead.salutation+' '+lead.firstname+' '+lead.lastname }} </h2>
+          <p class="badge leadColor name">Lead</p>
+          <span class="reviewed-icon" matTooltip="{{(lead.reviewed === '0') ? 'No Revizado': 'Revizado'}}" matTooltipPosition="right"><i class="fas"
+                  [ngClass]="{
+                  'fa-exclamation-circle':lead.reviewed === '0',
+                  'fa-check-circle':lead.reviewed === '1'
+                  }"
+                ></i> </span>
+          
+        
+        </div>
+        <div class="row">          
+          <div class="data-info float-left">
+            <p *ngIf="lead.date_created"><span class="icon"><i class="far fa-calendar"></i></span> {{ lead.date_created | date:'MMM dd yyyy - hh:mm aa'}}</p>
+          </div>
+          <div class="data-info float-left">          
+            <p *ngIf="lead.phone_home"><span class="icon"><i class="fas fa-phone"></i></span> {{lead.phone_home}}</p>
+            <p *ngIf="lead.phone_mobile"><span class="icon"><i class="fas fa-mobile"></i></span> {{lead.phone_mobile}}</p>            
+          </div>
+          <div class="data-info float-left">
+            <p *ngIf="lead.email1"><span class="icon"><i class="far fa-envelope"></i></span> {{ lead.email1 }}</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <p *ngIf="lead.campaign" class="info-text"><strong>Campaña:</strong> {{ lead.campaign.name }}</p>
+          <p *ngIf="lead.project" class="info-text"><strong>Proyecto:</strong> {{ lead.project.name }}</p>
+          <p class="desc-text">{{ lead.description }}</p>
+        </div>
+
+      </div>
+  </div>
+  <div class="row">
+      
+  </div>
+</div>
+
+          
+    

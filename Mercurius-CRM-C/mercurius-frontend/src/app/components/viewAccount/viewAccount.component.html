@@ -1,0 +1,56 @@
+<div class="view-info">
+  <div class="row">
+    <div class="col-12">
+     <button type="button" class="btn badge bgRedAppColor float-right" (click)="editAccount()">
+        <i class="fas fa-pencil-alt"></i> Editar
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+      
+      <div class="col-md-2">
+        <div class="rounded-circle statusColor--Orange InitialsCircle" *ngIf="account.name || account.lastName">{{ account.name | initialCharts | uppercase }}{{ account.lastName | initialCharts | lowercase }}</div>
+        
+        <div class="rating">
+            
+        </div> 
+      </div>
+      
+      <div class="col-md-10">
+        
+        <div class="row">       
+          <h2 class="title-name" *ngIf="account.name || account.lastName"> {{account.name+' '+account.lastName }} </h2>
+          <p class="badge accountColor name">Cliente</p>
+          
+
+        </div>
+
+        <div class="row">          
+          <div class="data-info float-left">
+            <p *ngIf="account.documentNumber"><span class="icon"><i class="far fa-address-card"></i></span> {{ account.typeDocument }} {{ account.documentNumber }}</p>
+            
+          </div>
+          <div class="data-info float-left">
+            <p *ngIf="account.email"><span class="icon"><i class="far fa-envelope"></i></span> {{ account.email}}</p>
+            <p *ngIf="account.address"><span class="icon"><i class="far fa-map"></i></span> {{ account.address}}</p>
+          </div>
+          <div class="data-info float-left">          
+            <p *ngIf="account.phone"><span class="icon"><i class="fas fa-phone-square"></i></span> {{account.phone}}</p>
+          </div>
+        </div>
+        
+        <div class="row">          
+          <p *ngIf="account.description" class="desc-text"><strong>Descripcion: </strong><br />{{ account.description }}</p>
+        </div>
+
+      
+      </div>
+  </div>    
+  <!--<div class="row">
+      
+  </div>-->
+</div>
+
+          
+    

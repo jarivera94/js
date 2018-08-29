@@ -1,0 +1,62 @@
+<div class="view-info">
+  <div class="row">
+    <div class="col-12">
+     <button type="button" class="btn badge bgRedAppColor float-right" (click)="editOpportunity()">
+        <i class="fas fa-pencil-alt"></i> Editar
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+      
+      <div class="col-md-2">
+        <div class="rounded-circle statusColor--Orange InitialsCircle" *ngIf="opportunity.name || opportunity.lastName">{{ opportunity.name | initialCharts | uppercase }}{{ opportunity.lastName | initialCharts | lowercase }}</div>
+        
+        <div class="rating">
+            <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 20}"><i class="fas fa-star"></i></span>
+            <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 40}"><i class="fas fa-star"></i></span>
+            <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 60}"><i class="fas fa-star"></i></span>
+            <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 80}"><i class="fas fa-star"></i></span>
+            <span class="stars" [ngClass]="{'highlight':opportunity.probability >= 100}"><i class="fas fa-star"></i></span>
+        </div> 
+      </div>
+      
+      <div class="col-md-10">
+        
+        <div class="row">       
+          <h2 class="title-name" *ngIf="opportunity.name || opportunity.lastName">{{opportunity.name+' '+opportunity.lastName }} </h2>
+          <p class="badge opportunityColor name">Oportunidad</p>
+        </div>
+
+        <div class="row">          
+          <div class="data-info float-left">
+            <p *ngIf="opportunity.account.name"><span class="icon"><i class="fas fa-user-circle"></i></span> {{ opportunity.account.name}}</p>
+          </div>
+          <div class="data-info float-left">          
+            <p *ngIf="opportunity.email"><span class="icon"><i class="far fa-envelope"></i></span> {{opportunity.email}}</p>
+          </div>
+          <div class="data-info float-left">
+            <p *ngIf="opportunity.salesStage"><span class="icon"><i class="fas fa-handshake"></i></span> {{ opportunity.salesStage | translateState:listDropdown.StateSale }}</p>
+            <p *ngIf="opportunity.probability"><span class="icon"><i class="fas fa-percent"></i></span> {{ opportunity.probability }}</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <p *ngIf="opportunity.campaign.name" class="info-text"><strong>Campaña:</strong> {{ opportunity.campaign.name }}</p>
+          <p *ngIf="opportunity.project.name" class="info-text"><strong>Proyecto:</strong> {{ opportunity.project.name }}</p>
+          <p *ngIf="opportunity.description" class="desc-text"><strong>Descripcion: </strong><br />{{ opportunity.description }}</p>
+          <p *ngIf="opportunity.negotiation" class="desc-text"><strong>Negociacion: </strong><br />{{ opportunity.negotiation }}</p>
+
+          <p *ngIf="opportunity.apartments" class="desc-text"><strong>Apartamentos: </strong><br />{{ opportunity.apartments }}</p>
+        </div>
+
+      
+      </div>
+  </div>    
+  <!--<div class="row">
+      
+  </div>-->
+</div>
+
+          
+    

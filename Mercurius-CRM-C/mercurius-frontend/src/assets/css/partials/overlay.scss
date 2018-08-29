@@ -1,0 +1,191 @@
+.overlay{
+	display: block;
+	background-color: $white-o-90;
+	height:100vh; //calc(100vh - 120px);
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	z-index: 1000;
+
+
+	.inner-box-overlay{
+		background: $white;
+	    border:1px solid $black-o-10;
+	    border-radius: 10px;
+	    box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.3);
+	    display: block;
+	    
+	    left: 50%;
+	    padding: 20px 30px;
+	    position:absolute;
+	    top: 50%;
+	    transform: translate(-50%,-50%);
+		width: 870px;
+
+		@include respond-to($mediumDevice) {
+			width: 80%;
+		}
+
+		@include respond-to($smallDevice) {
+			top: 0;
+			left: 0;
+			transform: none;
+			border-radius: 0px;
+			box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0);
+			width: 100%;
+			height: 100vh;
+			overflow-y: auto; 
+		}
+
+
+		&.tab-box{
+			background: transparent;
+		    border:none transparent;
+		    border-radius: 0;
+		    box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0);		    
+		    padding: 0;		    
+			width: 930px;
+
+			
+
+			.box-content-overlay{
+				background: $white;
+			    border:1px solid $black-o-10;
+			    border-radius: 10px 3px 10px 10px;
+			    box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.3);
+			    display: block;
+			    min-height: 420px;			    
+			    
+			    padding: 20px 30px;
+			    position: relative;			    
+				width: 870px;
+				z-index: 1003;
+
+				&.editContact{
+					min-height: 355px;
+				}
+			}
+
+			.tabs-overlay{
+				position: absolute;
+				right: 0;
+				top: 0;
+				width: 61px;
+
+				ul{
+					margin: 0;
+					padding: 0;
+
+					li{
+						a{
+							background: $white;
+			    			border:1px solid $black-o-10;
+			    			border-left: none transparent; 
+			    			border-radius: 0 10px 10px 0;
+			    			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+							display: inline-block;
+							height: 50px;
+							width: 61px;
+							position: relative;
+							z-index: 1001;
+
+							font-size: 20px;
+							color: $bluegrey;
+							cursor: pointer;
+							line-height: 50px;
+							text-align: center;
+
+
+							transition: all 1s ease;
+
+
+							&.selected,
+							&:hover{
+								box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
+								z-index: 1005;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	.title-overlay{
+		color: $darkbluegrey;
+	    font-size: 26px;
+	    font-weight: 700;	    
+		margin-left: 15px;
+	}	 
+
+	.row-form {
+
+	}
+  	.buttons{
+	    margin-bottom: 5px;
+	    margin-top: 5px;
+	    text-align:right;
+
+	    .btn{
+	      margin-left: 5px;
+
+	      @include respond-to($smallDevice) {
+	      	
+	      }
+	    } 
+	}
+
+
+	/* tabs override*/
+
+	&.opportunity-overlay{
+		.mat-tab-header{
+			border-bottom: none transparent;
+
+			.mat-tab-labels{
+				.mat-tab-label:first-child{
+					color: $darkbluegrey;
+				    font-size: 26px;
+				    font-weight: 700;	    
+					padding: 0 10px 0 0;
+					opacity: 1;					
+				}				
+			} 
+		}
+		.mat-tab-body-content{
+			overflow: hidden!important;
+			padding-top: 15px;
+		}
+		.disabledClass{
+			.mat-ink-bar{
+				visibility: hidden!important; 
+			}
+		}
+	}
+
+}
+
+.paddingTopPhone{
+	padding-top: 26px;
+	
+	@include respond-to($smallDevice) {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+} 
+
+
+.desLeadTextarea{
+	.mat-form-field-infix{
+		background-color: $whiteGrey;
+	}
+}
+
+.fixHeightInput{
+	.mat-form-field-infix{
+		height: 47px;
+	}
+	.mat-input-element{
+		height: 22px;
+	}
+}

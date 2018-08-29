@@ -1,0 +1,88 @@
+.login-box{	
+	background:$white url('../images/bkg-login-mercurius.png') bottom left no-repeat;
+	border:1px solid $black-o-10;
+	border-radius: 10px;
+	display: block;
+	height: 400px;
+	left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	top: 50%;
+	width: 790px;
+	z-index: 1;
+
+	-webkit-box-shadow: 3px 3px 7px 2px rgba(0,0,0,0.1);
+	-moz-box-shadow: 3px 3px 7px 2px rgba(0,0,0,0.1);
+	box-shadow: 3px 3px 7px 2px rgba(0,0,0,0.1);
+
+	@include respond-to($mediumDevice) {
+		border: none transparent;
+	    border-radius: 0;
+	    height: 100vh;
+	    left: auto;
+	    top: auto;
+	    transform: none;
+	    position: relative;
+	    width: 100%;
+	    
+	    -webkit-box-shadow: 0px 0px 0px 0px transparent;
+	    -moz-box-shadow: 0px 0px 0px 0px transparent;
+	    box-shadow: 0px 0px 0px 0px transparent;
+	    
+	    background-color: rgba(255,255,255, 0.3);
+	    background-size: auto 40%;
+	    background-position: left bottom;
+	}
+
+	.inner-loggin-box{
+		padding: 25px;
+		width: 400px;
+
+		@include respond-to($mediumDevice) {
+			    padding: 70px 25px 0;
+			    width: 100%;
+			    float: none!important;
+			    max-width: 480px;
+			    margin: 0 auto;
+		}
+		@include respond-to($smallDevice) {
+			padding: 35px 25px 0;
+		}
+		
+
+		.logo-log{
+			display:block;
+			margin: 0 auto 30px;
+		}
+		.form-group{
+			margin-bottom: 15px;
+
+			label{
+				color: $grey;
+				font-size: 20px;
+			}
+		}
+
+		.btnApp{
+			color: $white;
+			font-size: 14px;
+			padding: 9px 20px; 
+		}
+		.buttonForm{
+			text-align: right;
+		}
+	}
+}
+.login-bkg{
+	background:$white url('../images/bkg-login.jpg') center center no-repeat;
+	background-size: cover;
+	height:100vh;
+	position: absolute;
+	width: 100vw;
+	z-index: 0;
+
+	@include respond-to($mediumDevice) {
+    	    background-size: 100%;
+    		background-position: 50% 100%;
+  	}
+}

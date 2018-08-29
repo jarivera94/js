@@ -1,0 +1,95 @@
+
+<form>
+          <div class="row">
+            <h2 class="title-overlay">Llamadas</h2>
+          </div>
+
+          <div class="row">
+              <mat-form-field class="col-md-2">
+                <mat-select placeholder="Saludo"  id="leadSaludation" >
+                  <mat-option [value]="null">Saludo</mat-option>
+                  
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-5">
+                <input matInput placeholder="Nombre"  id="leadName" name="leadName" >
+              </mat-form-field>
+
+              <mat-form-field class="col-md-5">
+                <input matInput placeholder="Apellido"  id="leadLastName" name="leadLastName"  required>
+              </mat-form-field>
+          </div>
+
+          <div class="row">
+
+            <mat-form-field class="col-md-12">
+                  <mat-select placeholder="Profesión" id="leadTitle" name="leadTitle" >
+                    <mat-option [value]="null">Seleccionar Profesión</mat-option>
+                    
+                  </mat-select>
+              </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="col-lg-6">
+                <input matInput placeholder="Correo 1" id="leadEmail" name="leadEmail"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+              </mat-form-field>
+              <mat-form-field class="col-lg-6">
+                <input matInput placeholder="Correo 2"  id="leadEmail2" name="leadEmail2"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+              </mat-form-field>
+          </div>
+
+          <div class="row">
+            <mat-form-field class="col-md-12">
+              <textarea matInput matTextareaAutosize matAutosizeMinRows="2"
+              matAutosizeMaxRows="4" placeholder="Descripción Lead" id="leadDescription" name="leadDescription" ></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="row">
+
+            <mat-form-field class="col-lg-4">
+              <mat-select placeholder="Campaña"  id="leadCampaign" name="leadCampaign"  required>
+                <mat-option [value]="null">Seleccionar Campaña</mat-option>
+                
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-4">
+              <mat-select placeholder="Estado del Lead"  id="leadStatus" name="leadStatus"  required>
+                <mat-option [value]="null">Seleccionar estado</mat-option>
+                
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-lg-4">
+                <mat-select placeholder="Origen Lead"  id="leadSource" name="leadSource"  required>
+                  <mat-option [value]="null">Seleccionar Origen</mat-option>
+                  
+                </mat-select>
+              </mat-form-field>
+
+          </div>
+
+
+          <div class="row">
+            <mat-form-field class="col-md-9 col-lg-10">
+              <input matInput type="number" placeholder="Teléfono"  id="leadPhone" name="leadPhone"  pattern="[0-9]*">
+            </mat-form-field>
+
+            <div class="col-md-3 col-lg-2 paddingTopPhone">          
+             <mat-checkbox id="leadDontCall" name="leadDontCall" >No llamar</mat-checkbox>          
+            </div>
+          </div>
+
+          <div class="buttons clearfix">
+            <button type="button" class="btn btnApp bgGreyAppColor" >
+                <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+              </button>
+            <button type="submit" class="btn btnApp bgRedAppColor" >
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Crear
+              </button>
+          </div>
+        </form>

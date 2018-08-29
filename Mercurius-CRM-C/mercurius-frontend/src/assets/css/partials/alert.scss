@@ -1,0 +1,41 @@
+/*alert overlay*/
+.alert{
+	display: block;
+	background-color: $white-o-90;
+	height:100vh; //calc(100vh - 120px);
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	z-index: 1000;
+
+
+	.inner-box-alert{
+		background: $white;
+	    border:1px solid $black-o-10;
+	    border-radius: 10px;
+	    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+	    display: block;
+	    
+	    left: 50%;
+	    padding: 20px 30px;
+	    position:absolute;
+	    top: 50%;
+	    transform: translate(-50%,-50%);
+		width: 400px;
+	}
+	.title-alert{
+		color: $darkbluegrey;
+	    font-size: 20px;
+	    font-weight: 700;	    
+	}
+	.buttons{
+	    margin-bottom: 5px;
+	    margin-top: 5px;
+	    text-align:right;
+
+	    .btn{
+	      margin-left: 5px;
+	    } 
+	  }
+}

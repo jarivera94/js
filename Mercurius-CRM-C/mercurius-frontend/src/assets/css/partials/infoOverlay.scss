@@ -1,0 +1,83 @@
+.view-info{
+	.InitialsCircle{
+		color: $white;
+		font-weight: 700;
+	    font-style: italic;
+	    font-size: 48px;
+	    line-height: 100px;
+	    height: 105px;
+	    text-align: center;
+	    text-indent: -7px;
+	    width: 105px;
+	}
+	.rating{
+		.stars{
+			color: $lightGrey;
+			&.highlight{
+				color: $yellow;
+			}
+		}
+	}
+	.title-name{
+		color: $darkbluegrey;
+		font-size: 26px; 
+		font-weight: 700;
+		margin-right: 10px;
+		text-transform: capitalize;
+	}
+	.badge{
+		&.name{
+			color: $white;
+			display: inline-block;
+			font-weight: 400;
+			font-size: 12px;			
+			margin-top: 7px;
+			padding-right: 10px;
+			padding-left: 10px;
+			padding-bottom: 5px;
+
+			&.leadColor{
+				background-color: $grey;
+			}
+			&.opportunityColor{
+				background-color: $cyan;
+			}
+			&.accountColor{
+				background-color: $green;
+			}
+		}		
+	}
+	.reviewed-icon{
+		display: inline-block;
+		margin-left: 5px;
+		margin-top: 2px;
+	}
+	.data-info{
+		display: block;
+		width: 33.3333333%;
+		margin:0; 
+		padding:0;
+
+		p{
+			font-size: 14px;
+			margin-bottom: 5px;
+
+			.icon{
+				color: $grey;
+			}
+		} 
+	}
+	.desc-text{
+		display: block;
+		font-size: 14px;
+		margin-bottom: 15px;
+		width: 100%;		 
+	}
+	.info-text{
+		color: $bluegrey;
+		display: block;
+		font-size: 13px;
+		margin-bottom: 5px;
+		width: 100%;		
+	}
+}

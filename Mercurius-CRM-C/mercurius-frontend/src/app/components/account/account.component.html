@@ -1,0 +1,219 @@
+<div class="top-content clearfix">
+  <div class="container">
+    <div class="  float-left">
+      <h1 class="title-content">Clientes</h1>
+    </div>
+    
+    <!--<div class="float-right">
+      <button type="button" class="btn btnApp bgRedAppColor float-right" (click)="edit = true; newItem= true; openOverlay()"><i class="fas fa-plus"></i> Nuevo Cliente</button>
+    </div>-->
+
+  </div>
+</div>
+
+<!--begin filter -->
+<div class="filter-component ">
+  <div class="container clearfix">
+    <form>
+      <div class="filter-field float-left">
+        <div class="box-filter clearfix">
+          <p class="text float-left"><i class="fas fa-filter"></i> Filtrar</p>
+          <input type="text" name="" class="filter-input float-left" disabled/>
+        </div>
+      </div>
+      <div class="filter-buttons float-left">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-plus"></i> filtros</button>
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-caret-down"></i></button>
+        </div>
+        <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-th"></i></button>
+        <button type="button" class="btn btnApp bgRedAppColor" (click)="edit = true; newItem= true; openOverlay()"><i class="fas fa-plus"></i> Nuevo Cliente</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!--end filter -->
+
+<div class="body-content clearfix">
+  <div class="container">
+    <div class="table-list">
+      <table class="table" style="width:1200px;">
+        <thead>
+          <tr>
+            <th scope="col">Nombre de Cliente</th>
+            <th class="center"  align="center" scope="col">Teléfono</th>
+            <th class="center"  align="center" scope="col">Dirección</th>
+            <th class="center" align="center"  scope="col">Correos</th>
+            <th class="center"  align="center" scope="col">Tipo de Documento</th>
+            <th class="center"  align="center" scope="col">Número de Documento</th>
+            <th class="center" align="center"  scope="col">Campaña</th>
+            
+            <th class="center"  align="center" scope="col"><i class="fas fa-cog"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let account of accounts | paginate:{itemsPerPage: PAG_ITEMS_NUMBER, currentPage: page}">
+            <td class="viewLead" valign="middle" (click)="edit = false; newItem = false; openOverlay(account)">
+              <p>{{account.name}} {{account.lastName}}</p>
+              <p>{{account.description}}</p>
+            </td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(account)">{{account.phone}}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(account)">{{account.address}}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(account)">{{account.email}}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(account)">{{account.typeDocument}}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(account)">{{account.documentNumber}}</td>
+            <td class="viewLead" align="center" (click)="edit = false; newItem = false; openOverlay(account)">{{account.Campaign.name}}</td>
+            
+            <td align="center"><div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <!--<label class="btn btnApp btnToolsGrey hiddenEl">
+                  <input type="checkbox" autocomplete="off"> <i class="fas fa-eye"></i>
+                </label>-->
+
+                <button class="btn btnApp btnToolsGrey" type="button" (click)="edit = true; newItem= true; openOverlay(account)"> <i class="far fa-edit"></i></button>
+
+                <button class="btn btnApp btnToolsGrey" type="button" (click)="openAlert(account)"> <i class="far fa-trash-alt"></i></button>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination clearfix">
+        <div class="inner-pagination clearfix">
+          <pagination-controls (pageChange)="page = $event"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente">
+          </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--begin overlay -->
+<div id="overlay" class="overlay" *ngIf="overlay" (click)="closeOverlay()">
+  <div class="inner-box-overlay tab-box" (click)="$event.stopPropagation()">
+    <!--begin content ovelay-->
+    <div class="box-content-overlay" [ngSwitch]="tabSelection">      
+      <!--begin info lead-->
+      <div class="content-tab-box" *ngSwitchCase="'info'">
+        
+          <ng-container *ngIf="edit">
+            
+            <ng-container *ngIf="editSection=='account'">
+              <app-formAccount [sectionParent]="section" [accountInput]="account" [listDropdown]="listDropdown" [newItem]="newItem" (closeEvent)="closeOverlay()" (msgSnackBar)="getMsgSnackBar($event)" (reloadEvent)="getAccounts()" (editEvent)="openEdit($event)" (changeEditSectionChild)="changeEditSection($event)"></app-formAccount>
+            </ng-container>
+
+          </ng-container>
+
+          <ng-container *ngIf="!edit">            
+            <app-viewAccount  [account]="account"  (closeEvent)="closeOverlay()" (msgSnackBar)="getMsgSnackBar($event)" (reloadEvent)="getAccounts()" (editEvent)="openEdit($event)" ></app-viewAccount>
+          </ng-container>
+
+        
+
+      </div>
+      <!--end info lead-->
+      
+      <!--begin calls lead-->
+      <div class="content-tab-box" *ngSwitchCase="'calls'">
+        <div class="row">
+          <h2 class="title-overlay">Llamadas</h2>
+        </div>
+      </div>
+      <!--end calls lead-->
+
+      <!--begin documents lead-->
+      <div class="content-tab-box" *ngSwitchCase="'docs'">
+        <div class="row">
+          <h2 class="title-overlay">Documentos</h2>
+        </div>
+      </div>
+      <!--end documents lead-->
+
+      <!--begin mails lead-->
+      <div class="content-tab-box" *ngSwitchCase="'mails'">
+        <div class="row">
+          <h2 class="title-overlay">Correos</h2>
+        </div>
+      </div>
+      <!--end mails lead-->
+
+      <!--begin tasks lead-->
+      <div class="content-tab-box" *ngSwitchCase="'tasks'">
+        <div class="row">
+          <h2 class="title-overlay">Tareas</h2>
+        </div>
+      </div>
+      <!--end tasks lead-->
+
+      <!--begin meets lead-->
+      <div class="content-tab-box" *ngSwitchCase="'meets'">
+        <div class="row">
+          <h2 class="title-overlay">Reuniones</h2>
+        </div>
+      </div>
+      <!--end meets lead-->
+
+      <!--begin status lead-->
+      <div class="content-tab-box" *ngSwitchCase="'status'">
+        <div class="row">
+          <h2 class="title-overlay">Actividades</h2>
+        </div>
+      </div>
+      <!--end status lead-->
+
+    </div>
+    <!--end content ovelay-->
+    <!--begin tabs-->
+    <div class="tabs-overlay">
+        <ul>          
+          <li>
+            <a matTooltip="Información" matTooltipPosition="after" (click)="changeTabs('info'); edit=false" [class.selected]="tabSelection === 'info'"><i class="fas fa-newspaper"></i></a>
+          </li>          
+          <li *ngIf="!newItem">
+            <a matTooltip="Llamadas" matTooltipPosition="after" (click)="changeTabs('calls'); edit=false" [class.selected]="tabSelection === 'calls'"><i class="fas fa-phone"></i></a>
+          </li>         
+          <li *ngIf="!newItem">
+            <a matTooltip="Documentos" matTooltipPosition="after" (click)="changeTabs('docs'); edit=false" [class.selected]="tabSelection === 'docs'"><i class="far fa-file-alt"></i></a>
+          </li>
+          <li *ngIf="!newItem">
+            <a matTooltip="Correos" matTooltipPosition="after" (click)="changeTabs('mails'); edit=false" [class.selected]="tabSelection === 'mails'"><i class="fas fa-envelope"></i></a>
+          </li>
+         
+          <li *ngIf="!newItem">
+            <a matTooltip="Tareas" matTooltipPosition="after" (click)="changeTabs('tasks'); edit=false" [class.selected]="tabSelection === 'tasks'"><i class="fas fa-tasks"></i></a>
+          </li>
+          <li *ngIf="!newItem">
+            <a matTooltip="Reuniones" matTooltipPosition="after" (click)="changeTabs('meets'); edit=false" [class.selected]="tabSelection === 'meets'"><i class="fas fa-handshake"></i></a>
+          </li>          
+          <li *ngIf="!newItem">
+            <a matTooltip="Status" matTooltipPosition="after"  (click)="changeTabs('status'); edit=false" [class.selected]="tabSelection === 'status'"><i class="far fa-clock"></i></a>
+          </li>
+        </ul>
+    </div>
+    <!--end tabs-->
+  </div>
+</div>
+<!--end overlay -->
+
+<div id="alert" class="alert" *ngIf="alert">
+  <div class="inner-box-alert">
+    <form #accountFormDelete="ngForm" (ngSubmit)="formAccountDelete()">
+
+      <h2 class="title-alert">Desea borrrar la Cuenta actual?</h2>
+      <div class="row-form">
+          <p>{{account.name}}</p>
+      </div>
+      <div class="buttons clearfix">
+        <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeAlert()">
+          <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+        </button>
+        <button type="submit" class="btn btnApp bgRedAppColor" >
+          <i class="fas fa-minus-circle" aria-hidden="true"></i>
+          Borrar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

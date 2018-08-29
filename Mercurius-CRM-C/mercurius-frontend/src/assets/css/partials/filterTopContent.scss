@@ -1,0 +1,34 @@
+.filter-component{
+	margin: 10px 0;
+
+	.filter-field {
+		color: $lightGrey;
+		font-size: 12px;
+		width: calc(100% - 330px);
+
+		.box-filter{
+			border:1px solid $ligtherGrey;
+			border-radius: 20px;
+			box-sizing: border-box;
+			padding: 5px 15px; 
+			width: 98%;
+
+			.text{
+				margin: 3px 0 0 0;
+				padding: 0;
+				width: 70px;
+			}
+			.filter-input{
+				border:none;
+				height: 24px; 
+				width: calc(100% - 70px);
+
+				background-color: transparent;
+			}
+		}
+	}
+	.filter-buttons{
+		text-align: right;		
+		width: 330px;
+	}	
+}

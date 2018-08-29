@@ -1,0 +1,136 @@
+<!--begin top content-->
+<div class="top-content clearfix">
+  <div class="container">
+    <div class="  float-left">
+      <h1 class="title-content">Proyectos</h1>
+    </div>
+    
+    <!--<div class="float-right">
+      <button type="button" class="btn btnApp bgRedAppColor float-right" (click)="edit = false; openOverlay()"><i class="fas fa-plus"></i> Nuevo proyecto</button>
+    </div>-->
+
+  </div>
+</div>
+<!--end top content-->
+
+<!--begin filter -->
+<div class="filter-component ">
+  <div class="container clearfix">
+    <form>
+      <div class="filter-field float-left">
+        <div class="box-filter clearfix">
+          <p class="text float-left"><i class="fas fa-filter"></i> Filtrar</p>
+          <input type="text" name="" class="filter-input float-left" disabled/>
+        </div>
+      </div>
+      <div class="filter-buttons float-left">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-plus"></i> filtros</button>
+          <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-caret-down"></i></button>
+        </div>
+        <button class="btn btnApp bgRedAppColor" type="button" disabled> <i class="fas fa-th"></i></button>
+        <button type="button" class="btn btnApp bgRedAppColor" (click)="edit = false; openOverlay()"><i class="fas fa-plus"></i> Nuevo proyecto</button>
+      </div>
+    </form>
+  </div>
+</div>
+<!--end filter -->
+
+<!--begin body content-->
+<div class="body-content clearfix">
+  <div class="container">
+    <div class="table-list">
+      <table class="table">
+        <thead>
+          <tr>
+            <th width="85%" scope="col">Nombre Proyecto</th>                  
+            <th class="center" width="15%" align="center" scope="col"><i class="fas fa-cog"></i></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of projects  | paginate:{itemsPerPage: PAG_ITEMS_NUMBER, currentPage: page}">
+            <td width="85%">{{project.name}}</td>                  
+            <td width="15%" align="center">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <!--<label class="btn btnApp btnToolsGrey hiddenEl">
+                  <input type="checkbox" autocomplete="off"> <i class="fas fa-eye"></i>
+                </label>-->
+              
+                  <button class="btn btnApp btnToolsGrey" type="button" (click)="edit = true; openOverlay(project)"> <i class="far fa-edit"></i></button>
+                
+                
+                  <button class="btn btnApp btnToolsGrey" type="button" (click)="openAlert(project)"> <i class="far fa-trash-alt"></i></button>
+                
+              </div>
+
+            </td>
+          </tr>
+         
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination clearfix">
+        <div class="inner-pagination clearfix">
+          <pagination-controls (pageChange)="page = $event"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente">
+          </pagination-controls>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!--end body content-->
+
+<!--begin overlay content-->
+<div id="overlay" class="overlay" *ngIf="overlay">
+  <div class="inner-box-overlay">
+
+    <form #projectForm="ngForm" (ngSubmit)="formProject()">
+        <div class="row-form">
+          <h2 class="title-overlay">{{edit ? 'Editar Proyecto' : 'Nuevo Proyecto'}}</h2>
+        </div>                              
+        <div class="row">
+          <!--<label for="projectName">Nombre proyecto</label>-->
+          <mat-form-field class="col-md-12">
+            <input matInput placeholder="Nombre del proyecto"  id="projectName" name="projectName" #projectName="ngModel" [(ngModel)]="project.name"  required>
+          </mat-form-field>
+        </div>
+        <div class="buttons clearfix">
+          <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeOverlay()">
+            <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+          </button>
+          <button type="submit" class="btn btnApp bgRedAppColor" [disabled]="!projectForm.form.valid" >
+            <i class="fa fa-plus" aria-hidden="true"></i>                  
+            {{edit ? 'Actualizar' : 'Crear'}}
+          </button>
+        </div>            
+    </form>
+  </div>
+</div>
+<!--end overlay content-->
+
+<!--begin alert-->
+<div id="alert" class="alert" *ngIf="alert">
+  <div class="inner-box-alert">
+    <form #projectFormDelete="ngForm" (ngSubmit)="formProjectDelete()">
+      
+      <h2 class="title-alert">Desea borrar el proyecto actual?</h2>
+      <div class="row-form">
+          <p>{{project.name}}</p>
+      </div>
+      <div class="buttons clearfix">
+        <button type="button" class="btn btnApp bgGreyAppColor" (click)="closeAlert()">
+          <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+        </button>
+        <button type="submit" class="btn btnApp bgRedAppColor" >
+          <i class="fas fa-minus-circle" aria-hidden="true"></i>                  
+          Borrar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+<!--end alert-->
